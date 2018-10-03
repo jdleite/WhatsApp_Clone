@@ -8,7 +8,7 @@
     tools:context=".activity.LoginActivity">
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/edit_telefone"
         android:layout_width="256dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -16,7 +16,7 @@
         android:layout_marginStart="116dp"
         android:layout_marginBottom="252dp"
         android:ems="10"
-        android:hint="977501199"
+        android:hint="97750-1199"
         android:inputType="number"
         android:textColor="@color/textColorPrimary" />
 
@@ -35,7 +35,7 @@
         tools:layout_editor_absoluteY="0dp" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/bt_cadastrar"
         android:layout_width="355dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -48,7 +48,7 @@
         android:text="@string/botao_cadastrar" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/edit_nome"
         android:layout_width="376dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -56,14 +56,14 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
         android:layout_marginLeft="0dp"
-        android:layout_marginTop="218dp"
+        android:layout_marginTop="217dp"
         android:ems="10"
         android:hint="Digite seu nome"
         android:inputType="textPersonName"
         android:textColor="@color/textColorPrimary" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/edit_cod_pais"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -76,7 +76,7 @@
         android:textColor="@color/textColorPrimary" />
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/edit_cod_area"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
