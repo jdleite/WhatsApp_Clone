@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 preferencias.salvarUsuarioPreferencias(nomeUsuario,telefoneSemFormatacao,token);
 
                String mensagemEnvio = "WhatsApp Código de Confirmação : " + token;
-               telefoneSemFormatacao = "5555218135";
+               telefoneSemFormatacao = "555528135";
                Boolean enviadoSms =    eviaSms("+"  + telefoneSemFormatacao,mensagemEnvio);
 
                 /*
