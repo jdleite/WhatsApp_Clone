@@ -3,6 +3,7 @@ package br.com.whatsapp.cursoandroid.whatsapp.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -74,6 +75,10 @@ public class LoginActivity extends AppCompatActivity {
 
                 preferencias.salvarUsuarioPreferencias(nomeUsuario,telefoneSemFormatacao,token);
 
+               String mensagemEnvio = "WhatsApp Código de Confirmação : " + token;
+               telefoneSemFormatacao = "5555218135";
+               Boolean enviadoSms =    eviaSms("+"  + telefoneSemFormatacao,mensagemEnvio);
+
                 /*
                 HashMap<String,String> usuario = preferencias.getDadosUsuario();
 
@@ -91,5 +96,20 @@ public class LoginActivity extends AppCompatActivity {
 
        // startActivity(i);
 
+    }
+
+    private boolean eviaSms(String telefone,String mensgagem){
+        try {
+
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(telefone,null,mensgagem,null,null);
+
+            return  true;
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
