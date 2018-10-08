@@ -1,6 +1,9 @@
 package br.com.whatsapp.cursoandroid.whatsapp.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -15,101 +18,132 @@ import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import java.util.HashMap;
 import java.util.Random;
 
+import br.com.whatsapp.cursoandroid.whatsapp.Manifest;
 import br.com.whatsapp.cursoandroid.whatsapp.R;
+import br.com.whatsapp.cursoandroid.whatsapp.helper.Permissao;
 import br.com.whatsapp.cursoandroid.whatsapp.helper.Preferencias;
 
 public class LoginActivity extends AppCompatActivity {
-
+    private EditText nome;
     private EditText telefone;
     private EditText codPais;
-    private EditText nome;
     private EditText codArea;
-
     private Button cadastrar;
+    private String[] permissoesNecessarias = new String[]{
+            android.Manifest.permission.SEND_SMS,
+            android.Manifest.permission.INTERNET
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        telefone = (EditText) findViewById(R.id.edit_telefone);
-        codPais = (EditText) findViewById(R.id.edit_cod_pais);
-        codArea = (EditText) findViewById(R.id.edit_cod_area);
-        nome = (EditText) findViewById(R.id.edit_nome);
-        cadastrar = (Button) findViewById(R.id.bt_cadastrar);
+        Permissao.validaPermissoes(1, this, permissoesNecessarias);
 
+        nome       = (EditText) findViewById(R.id.edit_nome);
+        telefone   = (EditText) findViewById(R.id.edit_telefone);
+        codPais    = (EditText) findViewById(R.id.edit_cod_pais);
+        codArea    = (EditText) findViewById(R.id.edit_cod_area);
+        cadastrar  = (Button) findViewById(R.id.bt_cadastrar);
 
-
+        /*Definir mascaras*/
         SimpleMaskFormatter simpleMaskCodPais = new SimpleMaskFormatter("+NN");
-
-
         SimpleMaskFormatter simpleMaskCodArea = new SimpleMaskFormatter("NN");
-
         SimpleMaskFormatter simpleMaskTelefone = new SimpleMaskFormatter("NNNNN-NNNN");
 
-        MaskTextWatcher maskPais = new MaskTextWatcher(codPais, simpleMaskCodPais);
-
-        MaskTextWatcher maskArea = new MaskTextWatcher(codArea, simpleMaskCodArea);
-
+        MaskTextWatcher maskCodPais = new MaskTextWatcher(codPais, simpleMaskCodPais);
+        MaskTextWatcher maskCodArea = new MaskTextWatcher(codArea, simpleMaskCodArea);
         MaskTextWatcher maskTelefone = new MaskTextWatcher(telefone, simpleMaskTelefone);
 
-        telefone.addTextChangedListener(maskTelefone);
-        codPais.addTextChangedListener(maskPais);
-        codArea.addTextChangedListener(maskArea);
-
+        codPais.addTextChangedListener( maskCodPais );
+        codArea.addTextChangedListener( maskCodArea );
+        telefone.addTextChangedListener( maskTelefone );
 
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String nomeUsuario = nome.getText().toString();
-                String telefoneCompleto = codPais.getText().toString() + codArea.getText().toString() + telefone.getText().toString();
+                String telefoneCompleto =
+                        codPais.getText().toString() +
+                                codArea.getText().toString() +
+                                telefone.getText().toString();
 
-                String telefoneSemFormatacao = telefoneCompleto.replace("+","");
-                telefoneSemFormatacao = telefoneSemFormatacao.replace("-","");
+                String telefoneSemFormatacao = telefoneCompleto.replace("+", "");
+                telefoneSemFormatacao = telefoneSemFormatacao.replace("-", "");
 
-                Random random = new Random();
-                int numeroAleatorio = random.nextInt(9999 - 1000) + 1000;
-                String token = String.valueOf(numeroAleatorio);
+                //Gerar token
+                Random randomico = new Random();
+                int numeroRandomico = randomico.nextInt( 9999 - 1000 ) + 1000;
+                String token = String.valueOf( numeroRandomico );
+                String mensagemEnvio = "WhatsApp Código de Confirmação: " + token;
 
-                Preferencias preferencias = new Preferencias(getApplicationContext());
+                //Salvar os dados para validação
+                Preferencias preferencias = new Preferencias( LoginActivity.this );
+                preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemFormatacao, token);
 
-                preferencias.salvarUsuarioPreferencias(nomeUsuario,telefoneSemFormatacao,token);
-
-               String mensagemEnvio = "WhatsApp Código de Confirmação : " + token;
-               telefoneSemFormatacao = "555528135";
-               Boolean enviadoSms =    eviaSms("+"  + telefoneSemFormatacao,mensagemEnvio);
+                //Envio do SMS
+                telefoneSemFormatacao = "5554";
+                boolean enviadoSMS =  enviaSMS( "+" + telefoneSemFormatacao, mensagemEnvio );
 
                 /*
-                HashMap<String,String> usuario = preferencias.getDadosUsuario();
-
-                Log.i("TOKEN","NOME" + usuario.get("nome") + "FONE" + usuario.get("telefone"));
-
+                HashMap<String, String> usuario = preferencias.getDadosusuario();
+                Log.i("TOKEN", "NOME:" + usuario.get("nome") + " FONE: "+ usuario.get("telefone") );
                 */
-
-
-
             }
         });
 
 
-       // Intent i = new Intent(LoginActivity.this,ValidadorActivity.class);
-
-       // startActivity(i);
-
     }
 
-    private boolean eviaSms(String telefone,String mensgagem){
-        try {
+    /*Envio do SMS*/
+    private boolean enviaSMS(String telefone, String mensagem){
+
+        try{
 
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(telefone,null,mensgagem,null,null);
+            smsManager.sendTextMessage(telefone, null, mensagem, null, null);
 
-            return  true;
+            return true;
 
         }catch (Exception e){
             e.printStackTrace();
+            return false;
         }
 
-        return false;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        for( int resultado : grantResults ){
+
+            if( resultado == PackageManager.PERMISSION_GRANTED){
+                alertaValidacaoPermissao();
+            }
+
+        }
+
+    }
+
+    private void alertaValidacaoPermissao(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( this );
+        builder.setTitle("Permissões negadas");
+        builder.setMessage("Para utilizar esse app, é necessário aceitar as permissões");
+
+        builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+    }
+
 }
