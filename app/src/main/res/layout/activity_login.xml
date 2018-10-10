@@ -5,20 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary"
+    android:gravity="center_vertical|center_horizontal"
     tools:context=".activity.LoginActivity">
-
-    <EditText
-        android:id="@+id/edit_telefone"
-        android:layout_width="256dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="116dp"
-        android:layout_marginBottom="252dp"
-        android:ems="10"
-        android:hint="97750-1199"
-        android:inputType="number"
-        android:textColor="@color/textColorPrimary" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -27,64 +15,60 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="82dp"
-        android:layout_marginLeft="82dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginStart="84dp"
+        android:layout_marginLeft="84dp"
+        android:layout_marginTop="95dp"
         app:srcCompat="@drawable/logo"
         tools:layout_editor_absoluteX="92dp"
         tools:layout_editor_absoluteY="0dp" />
 
+    <EditText
+        android:id="@+id/edit_login_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginBottom="214dp"
+        android:ems="10"
+        android:hint="Digite seu e-mail"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/edit_login_senha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/edit_login_email"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="154dp"
+        android:ems="10"
+        android:hint="Digite sua senha"
+        android:inputType="textPersonName" />
+
     <Button
-        android:id="@+id/bt_cadastrar"
-        android:layout_width="355dp"
+        android:id="@+id/bt_logar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="90dp"
+        android:text="@string/botao_logar" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginLeft="13dp"
-        android:layout_marginBottom="187dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/botao_cadastrar" />
+        android:layout_marginStart="107dp"
+        android:layout_marginLeft="107dp"
+        android:layout_marginBottom="57dp"
+        android:onClick="abrirCadastroUsuario"
+        android:text="Não tem conta? cadastre-se"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
-    <EditText
-        android:id="@+id/edit_nome"
-        android:layout_width="376dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="217dp"
-        android:ems="10"
-        android:hint="Digite seu nome"
-        android:inputType="textPersonName"
-        android:textColor="@color/textColorPrimary" />
 
-    <EditText
-        android:id="@+id/edit_cod_pais"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="6dp"
-        android:layout_marginBottom="252dp"
-        android:ems="10"
-        android:hint="+55"
-        android:inputType="number"
-        android:textColor="@color/textColorPrimary" />
-
-    <EditText
-        android:id="@+id/edit_cod_area"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="62dp"
-        android:layout_marginBottom="251dp"
-        android:ems="10"
-        android:hint="11"
-        android:inputType="number"
-        android:textColor="@color/textColorPrimary" />
 </RelativeLayout>

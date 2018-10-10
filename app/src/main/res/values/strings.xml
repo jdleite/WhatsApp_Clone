@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">WhatsApp</string>
     <string name="botao_cadastrar">Cadastrar</string>
+    <string name="botao_logar">Logar</string>
 </resources>
