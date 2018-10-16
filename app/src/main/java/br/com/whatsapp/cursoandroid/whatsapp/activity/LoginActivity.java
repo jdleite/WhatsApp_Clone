@@ -19,8 +19,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        referenciaFirebase = ConfiguracaoFirebase.getFirebase();
-        referenciaFirebase.child("pontossss").setValue("405");
+
 
     }
 
