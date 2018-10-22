@@ -71,6 +71,7 @@
         android:layout_marginBottom="137dp"
         android:text="@string/botao_cadastrar"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="392dp" />
+        tools:layout_editor_absoluteY="392dp"
+        android:theme="@style/botaoPadrao"/>
 
 </RelativeLayout>
